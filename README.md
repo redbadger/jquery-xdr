@@ -1,17 +1,12 @@
 #jquery-xdr
 
-jQuery XDR shim, mainly for IE.
+Bower component to allow CORS in IE8/9 via jQuery
 
 ##Installation
 
 ###Bower
 
-`bower install jquery-xdr`
-
-###Manual Download
-
-- [Development]()
-- [Production]()
+`bower install redbadger/jquery-xdr`
 
 ##Usage
 
@@ -33,11 +28,3 @@ Docs coming soon
 ###Run
 
 `grunt dev`
-
-or for just running tests on file changes:
-
-`grunt ci`
-
-###Tests
-
-`grunt mocha`
