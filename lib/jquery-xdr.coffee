@@ -1,4 +1,3 @@
-
 root = this
 ((jQuery) ->
   if root.XDomainRequest
@@ -7,19 +6,18 @@ root = this
         if s.timeout
           s.xdrTimeout = s.timeout
           delete s.timeout
-
+        xdr = undefined
         send: (_, complete) ->
-          xdr = new XDomainRequest()
-          xdr.onprogress = ->
-
           callback = (status, statusText, responses, responseHeaders) ->
             xdr.onload = xdr.onerror = xdr.ontimeout = jQuery.noop
+            xdr = `undefined`
             complete status, statusText, responses, responseHeaders
+          xdr = new XDomainRequest()
+          xdr.onprogress = ->
 
           if s.dataType
             headerThroughUriParameters = "header_Accept=" + encodeURIComponent(s.dataType)
             s.url = s.url + ((if s.url.indexOf("?") is -1 then "?" else "&")) + headerThroughUriParameters
-
           xdr.open s.type, s.url
           xdr.onload = (e1, e2) ->
             callback 200, "OK",
@@ -32,8 +30,8 @@ root = this
           if s.xdrTimeout
             xdr.ontimeout = ->
               callback 0, "timeout"
-            xdr.timeout = s.xdrTimeout
 
+            xdr.timeout = s.xdrTimeout
           s.contentType = "text/plain"
           xdr.send (s.hasContent and s.data) or null
 

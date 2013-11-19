@@ -6,6 +6,20 @@
   </head>
   <body>
 
+    <script src="../bower_components/jquery/jquery.min.js"></script>
     <script src="../dist/jquery-xdr.js"></script>
+    <script>
+      $.ajax({
+          url: ''
+      }).done(function( data ) {
+        if ( console && console.log ) {
+          console.log( data )
+        }
+      }).fail(function( xhr, textStatus ) {
+        if ( console && console.log ) {
+          console.log( textStatus )
+        }
+      });
+    </script>
   </body>
 </html>

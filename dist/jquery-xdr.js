@@ -14,20 +14,23 @@
   (function(jQuery) {
     if (root.XDomainRequest) {
       return jQuery.ajaxTransport(function(s) {
+        var xdr;
         if (s.crossDomain && s.async) {
           if (s.timeout) {
             s.xdrTimeout = s.timeout;
             delete s.timeout;
           }
+          xdr = void 0;
           return {
             send: function(_, complete) {
-              var callback, headerThroughUriParameters, xdr;
-              xdr = new XDomainRequest();
-              xdr.onprogress = function() {};
+              var callback, headerThroughUriParameters;
               callback = function(status, statusText, responses, responseHeaders) {
                 xdr.onload = xdr.onerror = xdr.ontimeout = jQuery.noop;
+                xdr = undefined;
                 return complete(status, statusText, responses, responseHeaders);
               };
+              xdr = new XDomainRequest();
+              xdr.onprogress = function() {};
               if (s.dataType) {
                 headerThroughUriParameters = "header_Accept=" + encodeURIComponent(s.dataType);
                 s.url = s.url + (s.url.indexOf("?") === -1 ? "?" : "&") + headerThroughUriParameters;

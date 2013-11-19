@@ -2,4 +2,4 @@ server:
   options:
     hostname: '*'
     directory: '.'
-    livereload: true
+    livereload: false

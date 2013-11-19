@@ -1,5 +1,5 @@
 options:
-  livereload: true
+  livereload: false
 lib:
   files:
     - 'lib/<%= name %>.coffee'
