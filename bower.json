@@ -1,0 +1,23 @@
+{
+  "name": "jquery-xdr",
+  "description": "jQuery XDR shim, mainly for IE.",
+  "version": "0.1.0",
+  "homepage": "",
+  "license": "MIT",
+  "copyright": "Jon Sharratt",
+  "main": "dist/jquery-xdr.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "assert": "*",
+    "blanket": "*"
+  },
+  "ignore": [
+    "test",
+    "example",
+    "lib",
+    "Gruntfile.js",
+    "package.json",
+    "grunt"
+  ]
+}

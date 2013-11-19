@@ -1,0 +1,16 @@
+options:
+  livereload: true
+lib:
+  files:
+    - 'lib/<%= name %>.coffee'
+  tasks:
+    - 'scripts'
+example:
+  files:
+    - 'example/*'
+build:
+  files:
+    - 'bower.json'
+    - 'Gruntfile.js'
+    - 'grunt/*.yaml'
+  tasks: 'default'

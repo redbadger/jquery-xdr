@@ -1,0 +1,4 @@
+dist:
+  src:
+    - 'lib/<%= name %>.coffee'
+  dest: 'lib/<%= name %>.js'
