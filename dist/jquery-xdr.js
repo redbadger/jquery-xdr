@@ -7,56 +7,48 @@
  * MIT License
 */
 (function() {
-  var root;
-
-  root = this;
+  var _this = this;
 
   (function(jQuery) {
-    if (root.XDomainRequest) {
+    if (_this.XDomainRequest) {
       return jQuery.ajaxTransport(function(s) {
         var xdr;
         if (s.crossDomain && s.async) {
-          if (s.timeout) {
-            s.xdrTimeout = s.timeout;
-            delete s.timeout;
-          }
-          xdr = void 0;
+          xdr = new XDomainRequest();
           return {
-            send: function(_, complete) {
-              var callback, headerThroughUriParameters;
-              callback = function(status, statusText, responses, responseHeaders) {
+            send: function(headers, complete) {
+              var headerThroughUriParameters, response;
+              response = function(status, statusText, responses, responseHeaders) {
                 xdr.onload = xdr.onerror = xdr.ontimeout = jQuery.noop;
-                xdr = undefined;
                 return complete(status, statusText, responses, responseHeaders);
               };
-              xdr = new XDomainRequest();
-              xdr.onprogress = function() {};
-              if (s.dataType) {
-                headerThroughUriParameters = "header_Accept=" + encodeURIComponent(s.dataType);
-                s.url = s.url + (s.url.indexOf("?") === -1 ? "?" : "&") + headerThroughUriParameters;
-              }
-              xdr.open(s.type, s.url);
-              xdr.onload = function(e1, e2) {
-                return callback(200, "OK", {
+              xdr.onload = function() {
+                return response(200, 'OK', {
                   text: xdr.responseText
                 }, "Content-Type: " + xdr.contentType);
               };
-              xdr.onerror = function(e) {
-                return callback(404, "Not Found");
-              };
-              if (s.xdrTimeout) {
+              if (s.timeout) {
                 xdr.ontimeout = function() {
-                  return callback(0, "timeout");
+                  return response(0, 'Timeout');
                 };
-                xdr.timeout = s.xdrTimeout;
+                xdr.timeout = s.timeout;
               }
-              s.contentType = "text/plain";
-              return xdr.send((s.hasContent && s.data) || null);
+              if (s.dataType) {
+                headerThroughUriParameters = "header_Accept=" + (encodeURIComponent(s.dataType));
+                s.url = s.url + (s.url.indexOf('?') === -1 ? '?' : '&') + headerThroughUriParameters;
+              }
+              s.contentType = 'text/plain';
+              xdr.open(s.type, s.url);
+              xdr.onprogress = function() {};
+              xdr.send((s.hasContent && s.data) || null);
+              xdr.onerror = function(e) {
+                return response(404, 'Not Found');
+              };
             },
             abort: function() {
               if (xdr) {
                 xdr.onerror = jQuery.noop();
-                return xdr.abort();
+                xdr.abort();
               }
             }
           };

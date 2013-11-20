@@ -1,43 +1,36 @@
-root = this
-((jQuery) ->
-  if root.XDomainRequest
+((jQuery) =>
+  if @XDomainRequest
     jQuery.ajaxTransport (s) ->
       if s.crossDomain and s.async
-        if s.timeout
-          s.xdrTimeout = s.timeout
-          delete s.timeout
-        xdr = undefined
-        send: (_, complete) ->
-          callback = (status, statusText, responses, responseHeaders) ->
+        xdr = new XDomainRequest()
+
+        send: (headers, complete) ->
+          response = (status, statusText, responses, responseHeaders) ->
             xdr.onload = xdr.onerror = xdr.ontimeout = jQuery.noop
-            xdr = `undefined`
             complete status, statusText, responses, responseHeaders
-          xdr = new XDomainRequest()
-          xdr.onprogress = ->
+
+          xdr.onload = ->
+            response 200, 'OK',
+              text: xdr.responseText
+            , "Content-Type: #{xdr.contentType}"
+
+          if s.timeout
+            xdr.ontimeout = -> response 0, 'Timeout'
+            xdr.timeout = s.timeout
 
           if s.dataType
-            headerThroughUriParameters = "header_Accept=" + encodeURIComponent(s.dataType)
-            s.url = s.url + ((if s.url.indexOf("?") is -1 then "?" else "&")) + headerThroughUriParameters
+            headerThroughUriParameters = "header_Accept=#{encodeURIComponent(s.dataType)}"
+            s.url = s.url + ((if s.url.indexOf('?') is -1 then '?' else '&')) + headerThroughUriParameters
+
+          s.contentType = 'text/plain'
           xdr.open s.type, s.url
-          xdr.onload = (e1, e2) ->
-            callback 200, "OK",
-              text: xdr.responseText
-            , "Content-Type: " + xdr.contentType
-
-          xdr.onerror = (e) ->
-            callback 404, "Not Found"
-
-          if s.xdrTimeout
-            xdr.ontimeout = ->
-              callback 0, "timeout"
-
-            xdr.timeout = s.xdrTimeout
-          s.contentType = "text/plain"
+          xdr.onprogress = ->
           xdr.send (s.hasContent and s.data) or null
-
+          xdr.onerror = (e) -> response 404, 'Not Found'
+          return
         abort: ->
           if xdr
             xdr.onerror = jQuery.noop()
             xdr.abort()
-
+          return
 ) jQuery
