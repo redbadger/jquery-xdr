@@ -5,19 +5,45 @@
     <title>jquery-xdr example</title>
   </head>
   <body>
+    <h1>GET Response:</h1>
+    <h3 id="get" />
+    <hr/>
+    <h1>POST Response:</h2>
+    <h3 id="post" />
+
     <script src="../bower_components/jquery/jquery.min.js"></script>
     <script src="../dist/jquery-xdr.js"></script>
     <script>
+      // GET
       $.ajax({
-          url: ''
-      }).done(function( data ) {
-        if ( console && console.log ) {
-          console.log( JSON.stringify(data) )
+          url: 'http://iecors-api.herokuapp.com/hello_world'
+      }).done(function(data) {
+        if (console && console.log) {
+          console.log(JSON.stringify(data));
         }
+        $('#get').text(data);
+      }).fail(function(xhr, textStatus) {
+        if (console && console.log) {
+          console.log(textStatus)
+        }
+        $('#get').text(data);
+      });
+
+      // POST
+      $.ajax({
+          url: 'http://iecors-api.herokuapp.com/hello_world',
+          type: 'POST',
+          data: { message: 'Hello?' }
+      }).done(function(data) {
+        if (console && console.log) {
+          console.log(JSON.stringify(data))
+        }
+        $('#post').text(data);
       }).fail(function( xhr, textStatus ) {
-        if ( console && console.log ) {
-          console.log( textStatus )
+        if (console && console.log) {
+          console.log(textStatus);
         }
+        $('#post').text(data);
       });
     </script>
   </body>
