@@ -6,7 +6,7 @@ Bower component to allow CORS in IE8/9 via jQuery
 
 ###Bower
 
-`bower install redbadger/jquery-xdr`
+`bower install jquery-xdr`
 
 ##Usage
 
