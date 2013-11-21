@@ -1,6 +1,14 @@
 {
   "name": "jquery-xdr",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "jQuery polyfill to allow CORS for Internet Explorer 8 and 9.",
+  "keywords": ["CORS", "Internet Explorer", "IE", "jQuery"],
+  "license" : "MIT",
+  "contributors": ["Jon Sharratt"],
+  "bugs": {
+    "url" : "https://github.com/redbadger/jquery-xdr/issues",
+    "email" : "jon.sharratt@red-badger.com"
+  },
   "private": false,
   "devDependencies": {
     "grunt": "~0.4.1",
