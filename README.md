@@ -2,6 +2,9 @@
 
 Bower component to allow CORS in IE8/9 via jQuery
 
+Please see limitations of XDomainRequest at:
+http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
+
 ##Installation
 
 ###Bower
