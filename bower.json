@@ -1,7 +1,7 @@
 {
   "name": "jquery-xdr",
   "description": "jQuery XDR shim, mainly for IE.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "homepage": "",
   "license": "MIT",
   "copyright": "Jon Sharratt",
